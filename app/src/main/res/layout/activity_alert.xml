@@ -37,7 +37,6 @@
             android:text="EpiAlert"
             android:textColor="#80FFFFFF"
             android:textSize="13sp"
-            android:fontFamily="@font/inter_medium"
             android:letterSpacing="0.12" />
 
         <!-- Source badge: "via SMS" / "via FCM" -->
@@ -52,7 +51,6 @@
             android:text="via SMS"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
-            android:fontFamily="@font/inter_semibold"
             android:background="@drawable/bg_badge_source"
             tools:text="via FCM" />
 
@@ -99,7 +97,6 @@
                 android:text="⚠️ SEIZURE DETECTED"
                 android:textColor="@color/alert_headline_text"
                 android:textSize="30sp"
-                android:fontFamily="@font/inter_bold"
                 android:gravity="center"
                 android:letterSpacing="0.04"
                 android:layout_marginBottom="12dp" />
@@ -116,7 +113,6 @@
                 android:text="HIGH SEVERITY"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:fontFamily="@font/inter_bold"
                 android:letterSpacing="0.08"
                 android:background="@drawable/bg_severity_badge"
                 android:backgroundTint="@color/severity_high"
@@ -154,7 +150,6 @@
                         android:text="Detected: —"
                         android:textColor="@color/detail_text_primary"
                         android:textSize="15sp"
-                        android:fontFamily="@font/inter_medium"
                         android:layout_marginBottom="12dp"
                         tools:text="Detected: Aug 26, 2026 • 18:22:30" />
 
@@ -173,7 +168,6 @@
                         android:text="📍 Location: —"
                         android:textColor="@color/detail_text_primary"
                         android:textSize="15sp"
-                        android:fontFamily="@font/inter_medium"
                         android:layout_marginBottom="12dp"
                         tools:text="📍 Location: Living Room" />
 
@@ -192,7 +186,6 @@
                         android:text="🔌 Device: —"
                         android:textColor="@color/detail_text_primary"
                         android:textSize="15sp"
-                        android:fontFamily="@font/inter_medium"
                         android:layout_marginBottom="12dp"
                         tools:text="🔌 Device: SGD-001" />
 
@@ -211,7 +204,6 @@
                         android:text="📡 From: —"
                         android:textColor="@color/detail_text_secondary"
                         android:textSize="14sp"
-                        android:fontFamily="@font/inter_regular"
                         tools:text="📡 From: +15551234567" />
 
                 </LinearLayout>
@@ -243,7 +235,6 @@
             android:layout_height="60dp"
             android:text="✓  Acknowledge &amp; Silence"
             android:textSize="17sp"
-            android:fontFamily="@font/inter_bold"
             android:textColor="#FFFFFF"
             android:letterSpacing="0.02"
             app:backgroundTint="@color/btn_acknowledge"
@@ -258,7 +249,6 @@
             android:layout_height="60dp"
             android:text="📞  Call Emergency Contact"
             android:textSize="17sp"
-            android:fontFamily="@font/inter_semibold"
             android:textColor="@color/btn_call_text"
             android:letterSpacing="0.02"
             app:backgroundTint="@color/btn_call"

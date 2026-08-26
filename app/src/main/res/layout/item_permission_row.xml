@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
     item_permission_row.xml — Reusable row for each permission in MainActivity.
     The title/subtitle are set programmatically based on context.
@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/row_title"
             android:textSize="15sp"
-            android:fontFamily="@font/inter_medium"
             tools:text="SMS Permission" />
 
         <TextView
@@ -49,7 +48,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/label_text"
             android:textSize="12sp"
-            android:fontFamily="@font/inter_regular"
             android:layout_marginTop="2dp"
             tools:text="Tap to grant access" />
 
