@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_alert.xml — Full-screen emergency UI shown over the lock screen.
+    Design: Dark crimson background, pulsing ⚠️ icon, high-contrast white text,
+    two prominent action buttons.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/alert_background"
+    android:keepScreenOn="true"
+    tools:context=".ui.AlertActivity">
+
+    <!-- ═══════════════════════════════════════════
+         TOP STATUS STRIP
+    ═══════════════════════════════════════════ -->
+    <LinearLayout
+        android:id="@+id/topStrip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvAppLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EpiAlert"
+            android:textColor="#80FFFFFF"
+            android:textSize="13sp"
+            android:fontFamily="@font/inter_medium"
+            android:letterSpacing="0.12" />
+
+        <!-- Source badge: "via SMS" / "via FCM" -->
+        <TextView
+            android:id="@+id/tvSourceBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="via SMS"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:fontFamily="@font/inter_semibold"
+            android:background="@drawable/bg_badge_source"
+            tools:text="via FCM" />
+
+    </LinearLayout>
+
+    <!-- ═══════════════════════════════════════════
+         CENTRAL CONTENT — scrollable so it works on small screens
+    ═══════════════════════════════════════════ -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/topStrip"
+        app:layout_constraintBottom_toTopOf="@id/buttonContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <!-- ⚠️ Pulsing Alert Icon -->
+            <ImageView
+                android:id="@+id/ivAlertIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_alert_warning"
+                android:contentDescription="Emergency alert icon"
+                android:layout_marginBottom="16dp" />
+
+            <!-- SEIZURE DETECTED headline -->
+            <TextView
+                android:id="@+id/tvHeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚠️ SEIZURE DETECTED"
+                android:textColor="@color/alert_headline_text"
+                android:textSize="30sp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:letterSpacing="0.04"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Severity badge pill -->
+            <TextView
+                android:id="@+id/tvSeverityBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="HIGH SEVERITY"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_bold"
+                android:letterSpacing="0.08"
+                android:background="@drawable/bg_severity_badge"
+                android:backgroundTint="@color/severity_high"
+                android:layout_marginBottom="28dp"
+                tools:text="HIGH SEVERITY" />
+
+            <!-- ─── Divider ─────────────────────────────── -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Detail card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Timestamp -->
+                    <TextView
+                        android:id="@+id/tvTimestamp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Detected: —"
+                        android:textColor="@color/detail_text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/inter_medium"
+                        android:layout_marginBottom="12dp"
+                        tools:text="Detected: Aug 26, 2026 • 18:22:30" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/card_divider"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Location -->
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📍 Location: —"
+                        android:textColor="@color/detail_text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/inter_medium"
+                        android:layout_marginBottom="12dp"
+                        tools:text="📍 Location: Living Room" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/card_divider"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Device ID -->
+                    <TextView
+                        android:id="@+id/tvDeviceId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🔌 Device: —"
+                        android:textColor="@color/detail_text_primary"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/inter_medium"
+                        android:layout_marginBottom="12dp"
+                        tools:text="🔌 Device: SGD-001" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/card_divider"
+                        android:layout_marginBottom="12dp" />
+
+                    <!-- Sender -->
+                    <TextView
+                        android:id="@+id/tvSender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📡 From: —"
+                        android:textColor="@color/detail_text_secondary"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_regular"
+                        tools:text="📡 From: +15551234567" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ═══════════════════════════════════════════
+         ACTION BUTTONS — pinned to bottom
+    ═══════════════════════════════════════════ -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingBottom="32dp"
+        android:background="@drawable/bg_button_area"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Primary: Acknowledge & Silence -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAcknowledge"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="✓  Acknowledge &amp; Silence"
+            android:textSize="17sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="#FFFFFF"
+            android:letterSpacing="0.02"
+            app:backgroundTint="@color/btn_acknowledge"
+            app:cornerRadius="14dp"
+            app:elevation="4dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Secondary: Call Emergency Contact -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCallEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="📞  Call Emergency Contact"
+            android:textSize="17sp"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/btn_call_text"
+            android:letterSpacing="0.02"
+            app:backgroundTint="@color/btn_call"
+            app:strokeColor="@color/btn_call_border"
+            app:strokeWidth="2dp"
+            app:cornerRadius="14dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

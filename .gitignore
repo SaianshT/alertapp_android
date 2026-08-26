@@ -1,0 +1,16 @@
+# EpiAlert Android
+
+.gradle/
+.idea/
+*.iml
+local.properties
+**/.DS_Store
+build/
+app/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.jks
+*.keystore
+google-services.json
+app/src/main/res/raw/alarm_sound.*

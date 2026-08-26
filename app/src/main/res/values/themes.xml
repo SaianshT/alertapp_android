@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ═════════════════════════════════════════
+         BASE APPLICATION THEME (dark)
+    ═════════════════════════════════════════ -->
+    <style name="Theme.EpiAlert" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_primary</item>
+        <item name="colorPrimaryVariant">#1A6B2A</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">@color/card_main_bg</item>
+        <item name="colorOnSurface">@color/row_title</item>
+        <item name="colorBackground">@color/main_background</item>
+        <item name="colorOnBackground">@color/row_title</item>
+        <item name="android:windowBackground">@color/main_background</item>
+        <item name="android:statusBarColor">@color/toolbar_background</item>
+        <item name="android:navigationBarColor">@color/main_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
+    <!-- ═════════════════════════════════════════
+         ALERT TAKEOVER THEME
+         — No action bar, full screen, immersive
+    ═════════════════════════════════════════ -->
+    <style name="Theme.EpiAlert.Alert" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/alert_background</item>
+        <item name="android:statusBarColor">@color/alert_background</item>
+        <item name="android:navigationBarColor">@color/alert_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
+        <!-- Ensure the window shows when locked and turns the screen on -->
+        <item name="android:windowShowWhenLocked">true</item>
+        <item name="android:windowTurnScreenOn">true</item>
+
+        <!-- Keep screen on for the duration of the alert -->
+        <item name="android:keepScreenOn">true</item>
+
+        <!-- Full-bleed, no system chrome dimming -->
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorPrimaryDark">@color/alert_background</item>
+
+        <item name="colorPrimary">@color/alert_red</item>
+        <item name="colorPrimaryVariant">#B71C1C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+    </style>
+
+    <!-- ═════════════════════════════════════════
+         TOOLBAR TITLE STYLE
+    ═════════════════════════════════════════ -->
+    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/toolbar_title</item>
+    </style>
+
+    <!-- ═════════════════════════════════════════
+         SPLASH SCREEN (optional — Android 12+)
+    ═════════════════════════════════════════ -->
+    <style name="Theme.EpiAlert.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/main_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_alert_warning</item>
+        <item name="postSplashScreenTheme">@style/Theme.EpiAlert</item>
+    </style>
+
+</resources>

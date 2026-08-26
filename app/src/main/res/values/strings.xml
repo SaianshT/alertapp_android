@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EpiAlert</string>
+    <string name="default_notification_channel_id">seizure_emergency_channel</string>
+
+    <!-- Alert screen -->
+    <string name="alert_headline">⚠️ SEIZURE DETECTED</string>
+    <string name="alert_btn_acknowledge">✓  Acknowledge &amp; Silence</string>
+    <string name="alert_btn_call">📞  Call Emergency Contact</string>
+
+    <!-- Main screen -->
+    <string name="main_title">EpiAlert Setup</string>
+    <string name="perm_sms_title">SMS Alerts</string>
+    <string name="perm_sms_subtitle">Receive alerts from the hardware device via SMS</string>
+    <string name="perm_notification_title">Notifications</string>
+    <string name="perm_notification_subtitle">Show emergency notifications on this device</string>
+    <string name="perm_call_title">Call Phone</string>
+    <string name="perm_call_subtitle">Direct-dial your emergency contact from the alert screen</string>
+    <string name="perm_fsi_title">Full-Screen Intent (Android 14+)</string>
+    <string name="perm_fsi_subtitle">Show alerts over the lock screen when the device is asleep</string>
+    <string name="perm_battery_title">Battery Optimization</string>
+    <string name="perm_battery_subtitle">Ensure alerts arrive even in Doze / deep sleep mode</string>
+</resources>

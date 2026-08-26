@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_permission_row.xml — Reusable row for each permission in MainActivity.
+    The title/subtitle are set programmatically based on context.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    android:minHeight="64dp">
+
+    <!-- Status dot -->
+    <ImageView
+        android:id="@+id/ivStatusDot"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_status_warn"
+        android:contentDescription="Permission status"
+        app:tint="@color/status_warn"
+        android:layout_marginEnd="16dp" />
+
+    <!-- Text block -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPermissionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/row_title"
+            android:textSize="15sp"
+            android:fontFamily="@font/inter_medium"
+            tools:text="SMS Permission" />
+
+        <TextView
+            android:id="@+id/tvPermissionSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/label_text"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_regular"
+            android:layout_marginTop="2dp"
+            tools:text="Tap to grant access" />
+
+    </LinearLayout>
+
+    <!-- Chevron -->
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/label_text"
+        android:contentDescription="Open" />
+
+</LinearLayout>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Back up preferences (emergency contact number) -->
+    <include domain="sharedpref" path="EpiAlert_prefs.xml" />
+    <!-- Exclude cache -->
+    <exclude domain="cache" path="." />
+</full-backup-content>

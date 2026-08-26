@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml — Permission onboarding dashboard.
+    Each row shows a permission check with a status dot (green/red).
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context=".ui.MainActivity">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar_background"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title="@string/app_name"
+            app:titleTextColor="@color/toolbar_title"
+            app:titleTextAppearance="@style/ToolbarTitle" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- ══════════════════════════════════════
+                 READINESS STATUS BANNER
+            ══════════════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_main_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="System Status"
+                        android:textColor="@color/label_text"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/inter_semibold"
+                        android:letterSpacing="0.1"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvReadinessStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚠️ Action required — tap red items below"
+                        android:textColor="@color/status_warn"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/inter_medium"
+                        tools:text="✅ EpiAlert is active and monitoring" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════════════
+                 PERMISSIONS SECTION
+            ══════════════════════════════════════ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required Permissions"
+                android:textColor="@color/section_label"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0.08"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="4dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_main_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- SMS permission row -->
+                    <include
+                        android:id="@+id/rowSms"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <!-- Row initialised in code via binding via tag -->
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/card_divider" />
+
+                    <!-- Notification permission row -->
+                    <include
+                        android:id="@+id/rowNotification"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/card_divider" />
+
+                    <!-- Call phone row -->
+                    <include
+                        android:id="@+id/rowCall"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/card_divider" />
+
+                    <!-- Full-Screen Intent (Android 14+) -->
+                    <include
+                        android:id="@+id/rowFullScreenIntent"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/card_divider" />
+
+                    <!-- Battery optimisation row -->
+                    <include
+                        android:id="@+id/rowBatteryOptimisation"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════════════
+                 EMERGENCY CONTACT SECTION
+            ══════════════════════════════════════ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Emergency Contact"
+                android:textColor="@color/section_label"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0.08"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_main_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phone number to dial when &#8216;Call Emergency Contact&#8217; is tapped on the alert screen."
+                        android:textColor="@color/label_text"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Emergency number (e.g. +15551234567)"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        app:boxStrokeColor="@color/input_stroke"
+                        app:hintTextColor="@color/label_text"
+                        android:layout_marginBottom="12dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmergencyContact"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:textColor="@color/input_text"
+                            android:fontFamily="@font/inter_regular" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSaveContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Save Contact"
+                        android:fontFamily="@font/inter_semibold"
+                        app:backgroundTint="@color/accent_primary"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════════════
+                 FCM TOKEN SECTION
+            ══════════════════════════════════════ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FCM Device Token"
+                android:textColor="@color/section_label"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:letterSpacing="0.08"
+                android:textAllCaps="true"
+                android:layout_marginBottom="10dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_main_bg"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Register this token with your backend to enable cloud alerts."
+                        android:textColor="@color/label_text"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_regular"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvFcmToken"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Loading…"
+                        android:textColor="@color/token_text"
+                        android:textSize="12sp"
+                        android:fontFamily="monospace"
+                        android:background="@color/token_bg"
+                        android:padding="12dp"
+                        android:textIsSelectable="true"
+                        android:layout_marginBottom="12dp"
+                        tools:text="fVx2Rk9…(truncated)" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCopyToken"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Copy Token"
+                        android:fontFamily="@font/inter_semibold"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        app:strokeColor="@color/accent_primary"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════════════
+                 TEST ALARM BUTTON
+            ══════════════════════════════════════ -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTestAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="🚨  Trigger Test Alarm"
+                android:textSize="16sp"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="@color/btn_test_alarm"
+                app:cornerRadius="14dp"
+                android:layout_marginBottom="40dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Drawable: bg_button_area.xml
+    Gradient overlay behind the action buttons at the bottom of AlertActivity,
+    fading from transparent to alert_background so content underneath bleeds nicely.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:type="linear"
+        android:angle="90"
+        android:startColor="#001A0000"
+        android:endColor="#FF1A0000" />
+</shape>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ic_notification_alert.xml — Monochrome version for notification tray -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="@color/alert_red">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,2 L1,21 H23 Z M11,9 H13 L12.5,16 H11.5 Z M11.25,17.5 A0.75,0.75 0 1 0 12.75,17.5 A0.75,0.75 0 1 0 11.25,17.5 Z" />
+</vector>

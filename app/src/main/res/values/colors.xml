@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════════════════════════════════
+         ALERT SCREEN
+    ═══════════════════════════════════ -->
+    <color name="alert_background">#1A0000</color>
+    <color name="alert_headline_text">#FFFFFF</color>
+    <color name="alert_red">#FF1744</color>
+
+    <!-- Severity badge colours -->
+    <color name="severity_high">#D32F2F</color>
+    <color name="severity_medium">#F57C00</color>
+    <color name="severity_low">#388E3C</color>
+
+    <!-- Detail card inside alert screen -->
+    <color name="card_background">#2C0808</color>
+    <color name="card_divider">#3D1515</color>
+    <color name="detail_text_primary">#FFFDE7</color>
+    <color name="detail_text_secondary">#BCAAA4</color>
+
+    <!-- Buttons on alert screen -->
+    <color name="btn_acknowledge">#B71C1C</color>
+    <color name="btn_call">#1A1A2E</color>
+    <color name="btn_call_text">#FFFFFF</color>
+    <color name="btn_call_border">#FF5252</color>
+
+    <!-- ═══════════════════════════════════
+         MAIN / ONBOARDING SCREEN
+    ═══════════════════════════════════ -->
+    <color name="main_background">#0F1117</color>
+    <color name="toolbar_background">#161B22</color>
+    <color name="toolbar_title">#FFFFFF</color>
+    <color name="card_main_bg">#1C2130</color>
+
+    <color name="section_label">#8B9AB0</color>
+    <color name="label_text">#9BABC2</color>
+    <color name="row_title">#E6EDF3</color>
+
+    <!-- Permission status indicators -->
+    <color name="status_ok">#2EA043</color>
+    <color name="status_warn">#F85149</color>
+
+    <!-- Input fields -->
+    <color name="input_stroke">#30363D</color>
+    <color name="input_text">#E6EDF3</color>
+
+    <!-- FCM token display -->
+    <color name="token_text">#79C0FF</color>
+    <color name="token_bg">#0D1117</color>
+
+    <!-- Buttons on main screen -->
+    <color name="accent_primary">#238636</color>
+    <color name="btn_test_alarm">#CF222E</color>
+</resources>
