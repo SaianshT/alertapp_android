@@ -1,4 +1,4 @@
-﻿package com.epialert.app
+package com.epialert.app
 
 import android.app.Application
 import android.util.Log

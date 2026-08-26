@@ -1,4 +1,4 @@
-﻿package com.epialert.app.alarm
+package com.epialert.app.alarm
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

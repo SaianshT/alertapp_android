@@ -1,4 +1,4 @@
-﻿package com.epialert.app.service
+package com.epialert.app.service
 
 import android.app.Service
 import android.content.Intent

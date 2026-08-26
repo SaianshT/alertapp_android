@@ -1,4 +1,4 @@
-﻿package com.epialert.app.service
+package com.epialert.app.service
 
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService

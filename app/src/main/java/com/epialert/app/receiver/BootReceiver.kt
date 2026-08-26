@@ -1,4 +1,4 @@
-﻿package com.epialert.app.receiver
+package com.epialert.app.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

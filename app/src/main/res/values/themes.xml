@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- ═════════════════════════════════════════
@@ -10,7 +10,7 @@
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSurface">@color/card_main_bg</item>
         <item name="colorOnSurface">@color/row_title</item>
-        <item name="colorBackground">@color/main_background</item>
+        <item name="android:colorBackground">@color/main_background</item>
         <item name="colorOnBackground">@color/row_title</item>
         <item name="android:windowBackground">@color/main_background</item>
         <item name="android:statusBarColor">@color/toolbar_background</item>
@@ -29,10 +29,6 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
 
-        <!-- Ensure the window shows when locked and turns the screen on -->
-        <item name="android:windowShowWhenLocked">true</item>
-        <item name="android:windowTurnScreenOn">true</item>
-
         <!-- Keep screen on for the duration of the alert -->
         <item name="android:keepScreenOn">true</item>
 
@@ -50,7 +46,7 @@
          TOOLBAR TITLE STYLE
     ═════════════════════════════════════════ -->
     <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/toolbar_title</item>
     </style>

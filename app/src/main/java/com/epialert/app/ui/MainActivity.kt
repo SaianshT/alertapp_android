@@ -1,4 +1,4 @@
-﻿package com.epialert.app.ui
+package com.epialert.app.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -16,23 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import com.epialert.app.R
 import com.epialert.app.alarm.AlarmDispatcher
 import com.epialert.app.databinding.ActivityMainBinding
+import com.epialert.app.databinding.ItemPermissionRowBinding
 import com.epialert.app.model.SeizureAlert
 
 /**
  * MainActivity — Permission onboarding hub and app status dashboard.
- *
- * Checks and requests:
- *  1. POST_NOTIFICATIONS (Android 13+)
- *  2. RECEIVE_SMS / READ_SMS
- *  3. CALL_PHONE
- *  4. USE_FULL_SCREEN_INTENT (Android 14+ — redirects to Settings)
- *  5. Battery optimization exemption
- *  6. Emergency contact number configuration
- *
- * Also displays the current FCM token for backend registration and
- * provides a "Test Alarm" trigger for development verification.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -121,20 +112,28 @@ class MainActivity : AppCompatActivity() {
     // ─────────────────────────────────────────────────────────────────────────
 
     private fun setupPermissionRows() {
-        // SMS row
-        binding.rowSms.setOnClickListener { requestSmsPermissions() }
+        // Configure titles & subtitles
+        binding.rowSms.tvPermissionTitle.setText(R.string.perm_sms_title)
+        binding.rowSms.tvPermissionSubtitle.setText(R.string.perm_sms_subtitle)
 
-        // Notifications row
-        binding.rowNotification.setOnClickListener { requestNotificationPermission() }
+        binding.rowNotification.tvPermissionTitle.setText(R.string.perm_notification_title)
+        binding.rowNotification.tvPermissionSubtitle.setText(R.string.perm_notification_subtitle)
 
-        // CALL_PHONE row
-        binding.rowCall.setOnClickListener { requestCallPermission() }
+        binding.rowCall.tvPermissionTitle.setText(R.string.perm_call_title)
+        binding.rowCall.tvPermissionSubtitle.setText(R.string.perm_call_subtitle)
 
-        // Full-screen intent row (Android 14+)
-        binding.rowFullScreenIntent.setOnClickListener { checkFullScreenIntentPermission() }
+        binding.rowFullScreenIntent.tvPermissionTitle.setText(R.string.perm_fsi_title)
+        binding.rowFullScreenIntent.tvPermissionSubtitle.setText(R.string.perm_fsi_subtitle)
 
-        // Battery optimisation row
-        binding.rowBatteryOptimisation.setOnClickListener { requestBatteryOptimisationExemption() }
+        binding.rowBatteryOptimisation.tvPermissionTitle.setText(R.string.perm_battery_title)
+        binding.rowBatteryOptimisation.tvPermissionSubtitle.setText(R.string.perm_battery_subtitle)
+
+        // Click listeners on row roots
+        binding.rowSms.root.setOnClickListener { requestSmsPermissions() }
+        binding.rowNotification.root.setOnClickListener { requestNotificationPermission() }
+        binding.rowCall.root.setOnClickListener { requestCallPermission() }
+        binding.rowFullScreenIntent.root.setOnClickListener { checkFullScreenIntentPermission() }
+        binding.rowBatteryOptimisation.root.setOnClickListener { requestBatteryOptimisationExemption() }
 
         refreshStatusDots()
     }
@@ -330,18 +329,17 @@ class MainActivity : AppCompatActivity() {
     // UI helpers
     // ─────────────────────────────────────────────────────────────────────────
 
-    private fun setRowStatus(row: android.view.View, granted: Boolean) {
-        val dot = row.findViewById<android.widget.ImageView>(R.id.ivStatusDot)
-        dot?.setImageResource(
+    private fun setRowStatus(rowBinding: ItemPermissionRowBinding, granted: Boolean) {
+        rowBinding.ivStatusDot.setImageResource(
             if (granted) R.drawable.ic_status_ok else R.drawable.ic_status_warn
         )
-        dot?.setColorFilter(
+        rowBinding.ivStatusDot.setColorFilter(
             ContextCompat.getColor(this, if (granted) R.color.status_ok else R.color.status_warn)
         )
     }
 
-    private fun updatePermissionRow(row: android.view.View, granted: Boolean, message: String) {
-        setRowStatus(row, granted)
+    private fun updatePermissionRow(rowBinding: ItemPermissionRowBinding, granted: Boolean, message: String) {
+        setRowStatus(rowBinding, granted)
         showSnack(message)
     }
 

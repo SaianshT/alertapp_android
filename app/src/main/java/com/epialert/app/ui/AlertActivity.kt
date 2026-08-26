@@ -1,4 +1,4 @@
-﻿package com.epialert.app.ui
+package com.epialert.app.ui
 
 import android.app.KeyguardManager
 import android.content.Intent
