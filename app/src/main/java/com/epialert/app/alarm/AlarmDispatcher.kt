@@ -46,17 +46,58 @@ object AlarmDispatcher {
     fun triggerAlarm(context: Context, alert: SeizureAlert) {
         Log.i(TAG, "Triggering alarm for alert: $alert")
 
-        // 1. Acquire CPU wake lock so code keeps running after screen off
+        // 1. Acquire wake lock — turns screen on + keeps CPU alive
         acquireTemporaryWakeLock(context)
 
         // 2. Ensure the notification channel exists
         ensureChannel(context)
 
-        // 3. Start the foreground service (keeps alarm sound alive if app is backgrounded)
+        // 3. PRIMARY: Launch AlertActivity directly from the caller's context.
+        //    When called from an Activity (e.g. test button in MainActivity),
+        //    startActivity() simply pushes AlertActivity on top — no task weirdness.
+        //    When called from a BroadcastReceiver / Service, FLAG_ACTIVITY_NEW_TASK
+        //    is added and SYSTEM_ALERT_WINDOW provides BAL exemption.
+        launchAlertActivity(context, alert)
+
+        // 4. Start the foreground service for sound + vibration
+        //    (the service does NOT launch AlertActivity — that's handled above)
         startAlarmService(context, alert)
 
-        // 4. Post the full-screen notification
+        // 5. FALLBACK: Post FSI notification for lock-screen scenarios where
+        //    the direct startActivity() might be blocked
         postFullScreenNotification(context, alert)
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Direct activity launch
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Launches [AlertActivity] directly using the caller's context.
+     *
+     * - If [context] is an Activity: no special flags needed — the new activity
+     *   is simply pushed on top of the current one in the same task.
+     * - If [context] is NOT an Activity (BroadcastReceiver / Service):
+     *   FLAG_ACTIVITY_NEW_TASK is added, and SYSTEM_ALERT_WINDOW provides
+     *   the required BAL exemption.
+     */
+    private fun launchAlertActivity(context: Context, alert: SeizureAlert) {
+        try {
+            val intent = Intent(context, AlertActivity::class.java).apply {
+                // Only add NEW_TASK when launching from a non-Activity context.
+                // From an Activity, no task flags are needed — the activity simply
+                // launches on top of the current one, which is the reliable path.
+                if (context !is android.app.Activity) {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                putExtra(SeizureAlert.EXTRA_KEY, alert)
+            }
+            context.startActivity(intent)
+            Log.i(TAG, "AlertActivity launched directly (context=${context.javaClass.simpleName})")
+        } catch (e: Exception) {
+            Log.e(TAG, "Direct AlertActivity launch failed — FSI notification will act as fallback", e)
+        }
     }
 
     // ─────────────────────────────────────────────────────────────────────────
