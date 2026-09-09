@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.epialert.app.R
 import com.epialert.app.alarm.AlarmDispatcher
 import com.epialert.app.model.SeizureAlert
+import com.epialert.app.ui.AlertActivity
 
 /**
  * AlarmForegroundService — keeps the alarm sound and vibration alive
@@ -112,7 +113,37 @@ class AlarmForegroundService : Service() {
             .setAutoCancel(false)
             .build()
 
+        // Move service into foreground FIRST — this grants us BAL (Background Activity Launch)
+        // exemption, which means the startActivity() call below is allowed even from background.
         startForeground(NOTIFICATION_ID, notification)
+
+        // ── PRIMARY TRIGGER: directly launch AlertActivity ─────────────────────
+        // A running foreground service is exempt from Android 10+ BAL restrictions.
+        // This path does NOT require USE_FULL_SCREEN_INTENT permission.
+        // It fires immediately, turning the screen on and appearing over the lock screen
+        // thanks to the window flags configured in AlertActivity.configureWindowFlags().
+        launchAlertActivity(alert)
+    }
+
+    /**
+     * Directly starts [AlertActivity] from the foreground service context.
+     * Works on Android 10–15 without requiring the USE_FULL_SCREEN_INTENT special permission,
+     * because the calling service is already in the foreground (BAL exemption).
+     */
+    private fun launchAlertActivity(alert: SeizureAlert?) {
+        try {
+            val activityIntent = Intent(this, AlertActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+                if (alert != null) putExtra(SeizureAlert.EXTRA_KEY, alert)
+            }
+            startActivity(activityIntent)
+            Log.i(TAG, "AlertActivity launched directly from foreground service")
+        } catch (e: Exception) {
+            // Shouldn't happen while service is in foreground — log and let FSI notification handle it
+            Log.e(TAG, "Direct AlertActivity launch failed, FSI notification will act as fallback", e)
+        }
     }
 
     // ─────────────────────────────────────────────────────────────────────────

@@ -1,5 +1,6 @@
 package com.epialert.app.alarm
 
+import android.app.ActivityOptions
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -97,7 +98,9 @@ object AlarmDispatcher {
         val channel = NotificationChannel(
             CHANNEL_ID_EMERGENCY,
             CHANNEL_NAME_EMERGENCY,
-            NotificationManager.IMPORTANCE_HIGH
+            // IMPORTANCE_MAX is required for Full-Screen Intent notifications to reliably
+            // display over the lock screen. IMPORTANCE_HIGH is insufficient on some OEMs.
+            NotificationManager.IMPORTANCE_MAX
         ).apply {
             description             = "Critical seizure detection alerts from EpiAlert hardware"
             enableLights(true)
@@ -110,7 +113,6 @@ object AlarmDispatcher {
             )
             setBypassDnd(true)          // Override Do Not Disturb
             lockscreenVisibility    = NotificationCompat.VISIBILITY_PUBLIC
-            importance              = NotificationManager.IMPORTANCE_HIGH
         }
 
         nm.createNotificationChannel(channel)
@@ -140,12 +142,30 @@ object AlarmDispatcher {
             putExtra(SeizureAlert.EXTRA_KEY, alert)
         }
 
-        val fullScreenPi = PendingIntent.getActivity(
-            context,
-            NOTIFICATION_ID_ALERT,
-            alertIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        // On Android 12+ (API 31+), background activity launches via PendingIntents are blocked
+        // unless the PendingIntent is created with MODE_BACKGROUND_ACTIVITY_START_ALLOWED.
+        // This is the required opt-in for FSI notifications to work as a fallback.
+        val fullScreenPi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val options = ActivityOptions.makeBasic().apply {
+                @Suppress("DEPRECATION")
+                pendingIntentBackgroundActivityStartMode =
+                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+            }
+            PendingIntent.getActivity(
+                context,
+                NOTIFICATION_ID_ALERT,
+                alertIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                options.toBundle()
+            )
+        } else {
+            PendingIntent.getActivity(
+                context,
+                NOTIFICATION_ID_ALERT,
+                alertIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_EMERGENCY)
             .setSmallIcon(R.drawable.ic_notification_alert)
