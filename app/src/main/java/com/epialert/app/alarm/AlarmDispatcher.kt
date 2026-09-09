@@ -88,7 +88,16 @@ object AlarmDispatcher {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if (nm.getNotificationChannel(CHANNEL_ID_EMERGENCY) != null) return
+
+        // Delete any existing channel that has sub-MAX importance so our config update is applied.
+        // Android caches channel settings permanently after first creation — simply changing the
+        // importance in code has no effect if the channel already exists on the device.
+        val existing = nm.getNotificationChannel(CHANNEL_ID_EMERGENCY)
+        if (existing != null && existing.importance >= NotificationManager.IMPORTANCE_MAX) return
+        if (existing != null) {
+            nm.deleteNotificationChannel(CHANNEL_ID_EMERGENCY)
+            Log.d(TAG, "Deleted stale emergency channel (importance=${existing.importance}), recreating at MAX")
+        }
 
         val audioAttrs = AudioAttributes.Builder()
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
