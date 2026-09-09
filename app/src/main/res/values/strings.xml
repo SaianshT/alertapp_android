@@ -20,4 +20,6 @@
     <string name="perm_fsi_subtitle">Show alerts over the lock screen when the device is asleep</string>
     <string name="perm_battery_title">Battery Optimization</string>
     <string name="perm_battery_subtitle">Ensure alerts arrive even in Doze / deep sleep mode</string>
+    <string name="perm_overlay_title">Display Over Other Apps</string>
+    <string name="perm_overlay_subtitle">Required to show alerts instantly over any app or lock screen</string>
 </resources>

@@ -152,6 +152,16 @@
                     <View android:layout_width="match_parent" android:layout_height="1dp"
                         android:background="@color/card_divider" />
 
+                    <!-- Display over other apps (overlay) -->
+                    <include
+                        android:id="@+id/rowOverlay"
+                        layout="@layout/item_permission_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="@color/card_divider" />
+
                     <!-- Battery optimisation row -->
                     <include
                         android:id="@+id/rowBatteryOptimisation"

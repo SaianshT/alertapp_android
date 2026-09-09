@@ -125,6 +125,9 @@ class MainActivity : AppCompatActivity() {
         binding.rowFullScreenIntent.tvPermissionTitle.setText(R.string.perm_fsi_title)
         binding.rowFullScreenIntent.tvPermissionSubtitle.setText(R.string.perm_fsi_subtitle)
 
+        binding.rowOverlay.tvPermissionTitle.setText(R.string.perm_overlay_title)
+        binding.rowOverlay.tvPermissionSubtitle.setText(R.string.perm_overlay_subtitle)
+
         binding.rowBatteryOptimisation.tvPermissionTitle.setText(R.string.perm_battery_title)
         binding.rowBatteryOptimisation.tvPermissionSubtitle.setText(R.string.perm_battery_subtitle)
 
@@ -133,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         binding.rowNotification.root.setOnClickListener { requestNotificationPermission() }
         binding.rowCall.root.setOnClickListener { requestCallPermission() }
         binding.rowFullScreenIntent.root.setOnClickListener { checkFullScreenIntentPermission() }
+        binding.rowOverlay.root.setOnClickListener { requestOverlayPermission() }
         binding.rowBatteryOptimisation.root.setOnClickListener { requestBatteryOptimisationExemption() }
 
         refreshStatusDots()
@@ -235,7 +239,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestBatteryOptimisationExemption() {
         val pm = getSystemService(PowerManager::class.java)
         if (pm.isIgnoringBatteryOptimizations(packageName)) {
-            showSnack("Battery optimization already disabled ✓")
+            showSnack("Battery optimization already disabled \u2713")
             return
         }
 
@@ -250,6 +254,36 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
                     data = Uri.fromParts("package", packageName, null)
                 }
+                settingsLauncher.launch(intent)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    /**
+     * SYSTEM_ALERT_WINDOW ("Display over other apps") — provides a blanket
+     * exemption from Background Activity Launch restrictions on ALL Android
+     * versions. This is the same mechanism MyGate / Truecaller use.
+     */
+    private fun requestOverlayPermission() {
+        if (Settings.canDrawOverlays(this)) {
+            showSnack("Overlay permission already granted \u2713")
+            return
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Display Over Other Apps")
+            .setMessage(
+                "EpiAlert needs the \u201CDisplay over other apps\u201D permission to " +
+                        "show the emergency alert screen instantly \u2014 even when the phone " +
+                        "is locked or another app is in use.\n\n" +
+                        "Tap \u2018Open Settings\u2019, find EpiAlert, and enable the toggle."
+            )
+            .setPositiveButton("Open Settings") { _, _ ->
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName")
+                )
                 settingsLauncher.launch(intent)
             }
             .setNegativeButton("Cancel", null)
@@ -280,16 +314,20 @@ class MainActivity : AppCompatActivity() {
         } else true
         setRowStatus(binding.rowFullScreenIntent, fsiGranted)
 
+        // Overlay (Display over other apps) — critical for alert launch
+        val overlayGranted = Settings.canDrawOverlays(this)
+        setRowStatus(binding.rowOverlay, overlayGranted)
+
         // Battery optimisation
         val pm = getSystemService(PowerManager::class.java)
         setRowStatus(binding.rowBatteryOptimisation, pm.isIgnoringBatteryOptimizations(packageName))
 
-        // Overall readiness indicator
-        val allGranted = hasSmsPermissions() && notifGranted && fsiGranted
+        // Overall readiness indicator — overlay is essential
+        val allGranted = hasSmsPermissions() && notifGranted && fsiGranted && overlayGranted
         binding.tvReadinessStatus.text = if (allGranted) {
-            "✅ EpiAlert is active and monitoring"
+            "\u2705 EpiAlert is active and monitoring"
         } else {
-            "⚠️ Action required — tap red items above"
+            "\u26A0\uFE0F Action required \u2014 tap red items above"
         }
         binding.tvReadinessStatus.setTextColor(
             ContextCompat.getColor(

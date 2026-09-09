@@ -36,6 +36,11 @@
     <!-- Show over lock screen -->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
+    <!-- Display over other apps (SYSTEM_ALERT_WINDOW) — grants blanket exemption from
+         Background Activity Launch restrictions on ALL Android versions. This is how
+         MyGate, Truecaller, phone dialers, etc. launch full-screen UI from background. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <!-- Schedule exact alarms (Android 12+) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
@@ -73,13 +78,12 @@
         <activity
             android:name=".ui.AlertActivity"
             android:exported="false"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:showOnLockScreen="true"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
             android:screenOrientation="portrait"
             android:excludeFromRecents="true"
-            android:taskAffinity="com.epialert.app.alert"
             android:theme="@style/Theme.EpiAlert.Alert" />
 
         <!-- ═══════════════════════════════════════════

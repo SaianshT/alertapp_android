@@ -66,15 +66,19 @@ object AlarmDispatcher {
     private fun acquireTemporaryWakeLock(context: Context) {
         try {
             val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+            // SCREEN_BRIGHT_WAKE_LOCK is deprecated but still works and is the ONLY reliable
+            // way to force the screen on from a BroadcastReceiver/Service context.
+            // PARTIAL_WAKE_LOCK silently ignores ACQUIRE_CAUSES_WAKEUP — the screen never turns on.
             @Suppress("DEPRECATION")
             val wakeLock = pm.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK or
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
                 PowerManager.ACQUIRE_CAUSES_WAKEUP or
                 PowerManager.ON_AFTER_RELEASE,
                 WAKE_LOCK_TAG
             )
             wakeLock.acquire(WAKE_LOCK_TIMEOUT_MS)
-            Log.d(TAG, "Wake lock acquired for ${WAKE_LOCK_TIMEOUT_MS}ms")
+            Log.d(TAG, "Wake lock acquired (SCREEN_BRIGHT + ACQUIRE_CAUSES_WAKEUP) for ${WAKE_LOCK_TIMEOUT_MS}ms")
         } catch (e: Exception) {
             Log.e(TAG, "Failed to acquire wake lock", e)
         }
